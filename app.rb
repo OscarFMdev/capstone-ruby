@@ -12,6 +12,7 @@ ACTIONS = {
   0 => :break
 }.freeze
 
+# this is a class
 class App
   def options
     puts ''

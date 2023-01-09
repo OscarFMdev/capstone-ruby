@@ -10,8 +10,8 @@ class Item
   end
 
   def move_to_archive(item)
-    if can_be_archived?
-      item.archived = false
-    end
+    return unless can_be_archived?
+
+    item.archived = false
   end
 end
