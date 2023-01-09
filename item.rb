@@ -1,5 +1,4 @@
 class Item
-
   def initialize(book, music_album, game)
     @book = book
     @music_album = music_album
@@ -12,8 +11,7 @@ class Item
 
   def move_to_archive(item)
     if can_be_archived?
-      item.archived = false  
+      item.archived = false
     end
   end
-  
 end
