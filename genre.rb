@@ -1,6 +1,4 @@
-require_relative 'item'
-
-class Genre < Item
+class Genre
   attr_accessor :name
 
   def initialize(name)
@@ -14,5 +12,5 @@ class Genre < Item
   def add_item(item)
     @item << item
     item.label = self
-  end  
+  end
 end
