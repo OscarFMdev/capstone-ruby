@@ -1,18 +1,18 @@
+require 'date'
+
 class Item
-  def initialize(book, music_album, game)
-    @book = book
-    @music_album = music_album
-    @game = game
+  def initialize(archive: false, published_date: Date.today)
+    @id = Random.rand(1..1000)
+    @archive = archive
+    @published_date = published_date
   end
 
-  def can_be_archived?(published_date)
-    published_date > 10
+  def can_be_archived?
+    @published_date > 10
   end
 
-  def move_to_archive(item)
-    return unless can_be_archived?
-
-    item.archived = false
+  def move_to_archive
+    @archive = can_be_archived?
   end
 
   def label=(label)
