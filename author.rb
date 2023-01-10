@@ -19,4 +19,3 @@ class Author
 end
 
 author = Author.new('Hello', 'World')
-p author.items
