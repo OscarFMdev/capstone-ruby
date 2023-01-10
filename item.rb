@@ -23,5 +23,6 @@ class Item
   def author=(author)
     @author = author
     author.items.push(self) unless author.items.include?(self)
+
   end
 end
