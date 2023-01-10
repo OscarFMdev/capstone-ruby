@@ -3,15 +3,16 @@ class Item
     @book = book
     @music_album = music_album
     @game = game
+    @archive = false
   end
+
+  private
 
   def can_be_archived?(published_date)
     published_date > 10
   end
 
-  def move_to_archive(item)
-    return unless can_be_archived?
-
-    item.archived = false
+  def move_to_archive
+    @archive = can_be_archived?
   end
 end
