@@ -10,8 +10,11 @@ class Book < Item
   end
 
   def can_be_archived?
-    return true if @published_date > 10 || @cover_state == 'bad'
+    return true if super || @cover_state == 'bad'
 
     false
   end
 end
+
+book = Book.new('dsad', 'bad')
+puts book.can_be_archived?
