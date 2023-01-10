@@ -7,7 +7,7 @@ describe 'Test Label class' do
     expect(label).to be_instance_of(Label)
   end
 
-  it "book title should be 'test1'" do
+  it "label title should be 'test1'" do
     expect(label.title).to eql 'test1'
   end
 end
