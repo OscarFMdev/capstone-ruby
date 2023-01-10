@@ -1,7 +1,7 @@
 class Author
   private
 
-  attr_accessor id, items
+  attr_accessor :id, :items
 
   def initialize(id, first_name, last_name, items)
     @id = id
