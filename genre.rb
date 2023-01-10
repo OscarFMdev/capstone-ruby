@@ -10,7 +10,7 @@ class Genre
   private :id, :items
 
   def add_item(item)
-    @item << item
-    item.label = self
+    @items << item
+    item.genre = self
   end
 end
