@@ -19,3 +19,4 @@ class Author
 end
 
 author = Author.new('Hello', 'World')
+puts author
