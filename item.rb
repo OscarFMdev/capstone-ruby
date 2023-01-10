@@ -17,6 +17,6 @@ class Item
 
   def label=(label)
     @label = label
-    label.push(self) unless label.items.include?(self)
+    label.items.push(self) unless label.items.include?(self)
   end
 end
