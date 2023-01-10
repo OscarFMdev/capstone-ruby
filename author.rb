@@ -13,10 +13,10 @@ class Author
     item.author = self
   end
 
-  private 
+  private
+
   attr_accessor :id, :items
 end
-
 
 author = Author.new('Hello', 'World')
 p author.items

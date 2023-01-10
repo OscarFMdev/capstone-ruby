@@ -13,8 +13,6 @@ class Game < Item
 
     false
   end
-
-  
 end
 
 game = Game.new('dsad', 1)
