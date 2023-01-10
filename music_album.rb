@@ -16,3 +16,6 @@ class MusicAlbum < Item
     false
   end
 end
+
+music_album = MusicAlbum.new('no')
+puts music_album.can_be_archived?
