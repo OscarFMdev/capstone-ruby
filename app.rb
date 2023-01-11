@@ -1,3 +1,8 @@
+require_relative 'book'
+require_relative 'label'
+require 'json'
+require_relative 'read_data'
+
 ACTIONS = {
   1 => :list_books,
   2 => :list_music_albums,
@@ -14,6 +19,13 @@ ACTIONS = {
 
 # this is a class
 class App
+  include ReadData
+
+  def initialize
+    @books = read_books
+    @labels = read_labels
+  end
+
   def options
     puts ''
     puts 'Please choose an option by enterin a number:'
@@ -28,6 +40,35 @@ class App
     puts '9 - Add a music album'
     puts '10 - Add a game'
     puts '0 - Exit'
+  end
+
+  def list_books
+    puts ''
+    puts 'Book list'
+    puts "These are all saved books:\ncount(#{@books.count})\n "
+    if @books.empty?
+      puts 'No books in the database'
+    else
+      @books.each_with_index do |b, i|
+        puts "#{i + 1}) Publisher: #{b['publisher']}, cover state: #{b['cover_state']},
+        can be archived: #{b['can_be_archived']}"
+      end
+      puts "\nEnd of the book's list\n "
+    end
+  end
+
+  def list_labels
+    puts ''
+    puts 'Label list'
+    puts "These are all saved label:\ncount(#{@labels.count})\n "
+    if @labels.empty?
+      puts 'No labels in the database'
+    else
+      @labels.each_with_index do |b, i|
+        puts "#{i + 1}) Title: #{b['title']}, color: #{b['color']}"
+      end
+      puts "\nEnd of the label's list\n "
+    end
   end
 
   def select
