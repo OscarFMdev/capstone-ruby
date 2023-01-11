@@ -42,6 +42,23 @@ class App
     puts '0 - Exit'
   end
 
+  def select
+    loop do
+      options
+      option = gets.chomp.to_i
+      action = ACTIONS[option]
+      if action == :break
+        handle_exit
+        puts 'Thank you for using this app!'
+        break
+      elsif action
+        send(action)
+      else
+        puts 'Error: Invalid number, try again'
+      end
+    end
+  end
+
   def list_books
     puts ''
     puts 'Book list'
@@ -68,23 +85,6 @@ class App
         puts "#{i + 1}) Title: #{b['title']}, color: #{b['color']}"
       end
       puts "\nEnd of the label's list\n "
-    end
-  end
-
-  def select
-    loop do
-      options
-      option = gets.chomp.to_i
-      action = ACTIONS[option]
-      if action == :break
-        handle_exit
-        puts 'Thank you for using this app!'
-        break
-      elsif action
-        send(action)
-      else
-        puts 'Error: Invalid number, try again'
-      end
     end
   end
 
