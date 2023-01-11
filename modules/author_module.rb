@@ -8,6 +8,7 @@ module AuthorModule
     author.add_item(item)
     @authors << { 'first_name' => author.first_name, 'last_name' => author.last_name }
   end
+
   def list_authors
     puts ''
     puts 'author list'

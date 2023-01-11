@@ -12,7 +12,7 @@ module GameModule
       add_author(game)
       add_label(game)
       @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
-        'can_be_archived' => game.move_to_archive }
+                  'can_be_archived' => game.move_to_archive }
       puts ''
       puts 'Game and author successfully added'
     when 2
@@ -23,7 +23,7 @@ module GameModule
       add_author(game)
       add_label(game)
       @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
-        'can_be_archived' => game.move_to_archive }
+                  'can_be_archived' => game.move_to_archive }
       puts ''
       puts 'Game and author successfully added'
     else
@@ -31,6 +31,7 @@ module GameModule
       add_game
     end
   end
+
   def list_games
     puts ''
     puts 'Game list'
