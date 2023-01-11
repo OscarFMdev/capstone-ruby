@@ -1,5 +1,7 @@
 require_relative 'book'
 require_relative 'label'
+require_relative 'game'
+require_relative 'author'
 require 'json'
 require_relative 'read_data'
 
@@ -24,6 +26,8 @@ class App
   def initialize
     @books = read_books
     @labels = read_labels
+    @games = read_games
+    @authors = read_authors
   end
 
   def options
@@ -74,6 +78,21 @@ class App
     end
   end
 
+  def list_games
+    puts ''
+    puts 'Game list'
+    puts "These are all saved games:\ncount(#{@games.count})\n "
+    if @games.empty?
+      puts 'No games in the database'
+    else
+      @games.each_with_index do |b, i|
+        puts "#{i + 1}) Multiplayer: #{b['multiplayer']}, Last played at: #{b['last_played_at']},
+        can be archived: #{b['can_be_archived']}"
+      end
+      puts "\nEnd of the book's list\n "
+    end
+  end
+
   def list_labels
     puts ''
     puts 'Label list'
@@ -94,6 +113,7 @@ class App
     publisher = gets.chomp.to_s
     puts 'Is the cover state good (1) or bad (2)? [Input the number]:'
     state = gets.chomp.to_i
+    puts ''
     case state
     when 1
       book = Book.new(publisher, 'good')
@@ -104,6 +124,28 @@ class App
     else
       puts 'Incorrect number, please enter the book again'
       add_book
+    end
+  end
+
+  def add_game
+    puts ''
+    puts 'Is the game multiplayer (1) or not (2)? [Input the number]:'
+    multiplayer = gets.chomp.to_i
+    case multiplayer
+    when 1
+      game = Game.new(true)
+      puts 'When was the last time you played it?:'
+      date = input_date(game)
+      add_author(game)
+      game.last_played_at = date
+    when 2
+      game = Game.new(false, year, month, day)
+      puts 'When was the last time you played it?:'
+      input_date(game)
+      add_author(game)
+    else
+      puts 'Incorrect number, please enter the game again'
+      add_game
     end
   end
 
@@ -120,10 +162,25 @@ class App
     puts ''
     puts 'Book and label successfully added'
   end
+  def add_author(item)
+    puts 'Author fist name:'
+    first_name = gets.chomp.to_s
+    puts 'Author last name:'
+    last_name = gets.chomp.to_s
+    author = Author.new(first_name, last_name)
+    author.add_item(item)
+    @authors << { 'first_name' => author.first_name, 'last_name' => author.last_name }
+    @games << { 'multiplayer' => item.multiplayer, 'last_played_at' => item.last_played_at,
+                'can_be_archived' => item.move_to_archive }
+    puts ''
+    puts 'Game and author successfully added'
+  end
 
   def handle_exit
     handle_books
     handle_label
+    handle_games
+    handle_authors
   end
 
   def handle_books
@@ -153,5 +210,44 @@ class App
 
     File.write('./data/labels.json', data)
     puts 'labels saved successfully'
+  end
+  def handle_games
+    return if @games.empty?
+
+    data = JSON.pretty_generate(@games.map do |e|
+                                  {
+                                    multiplayer: e['multiplayer'],
+                                    last_played_at: e['last_played_at'],
+                                    can_be_archived: e['can_be_archived']
+                                  }
+                                end)
+
+    File.write('./data/games.json', data)
+    puts 'Games saved successfully'
+  end
+
+  def handle_authors
+    return if @authors.empty?
+
+    data = JSON.pretty_generate(@authors.map do |e|
+                                  {
+                                    first_name: e['first_name'],
+                                    last_name: e['last_name']
+                                  }
+                                end)
+
+    File.write('./data/authors.json', data)
+    puts 'Authors saved successfully'
+  end
+
+  def input_date(item)
+    puts 'Year:'
+    year = gets.chomp.to_i
+    puts 'Month:'
+    month = gets.chomp.to_i
+    puts 'Day:'
+    day = gets.chomp.to_i
+    item.published_date = Date.new(year, month, day)
+    return item.published_date
   end
 end
