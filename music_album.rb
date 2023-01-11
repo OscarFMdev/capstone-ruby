@@ -8,8 +8,6 @@ class MusicAlbum < Item
     @on_spotify = on_spotify
   end
 
-  private
-
   def can_be_archived?
     return true if super || @on_spotify == true
 
@@ -17,5 +15,5 @@ class MusicAlbum < Item
   end
 end
 
-music_album = MusicAlbum.new('no')
+music_album = MusicAlbum.new(true)
 puts music_album.can_be_archived?

@@ -7,10 +7,12 @@ class Genre
     @items = []
   end
 
-  private :id, :items
-
   def add_item(item)
     @items << item
     item.genre = self
   end
+
+  private
+
+  attr_accessor :id, :items
 end

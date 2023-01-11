@@ -1,6 +1,8 @@
 require 'date'
 
 class Item
+  attr_accessor :published_date
+
   def initialize(archive: false, published_date: Date.today)
     @id = Random.rand(1..1000)
     @archive = archive
@@ -13,6 +15,7 @@ class Item
 
   def move_to_archive
     @archive = can_be_archived?
+    can_be_archived?
   end
 
   def label=(label)
