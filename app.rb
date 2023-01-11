@@ -4,10 +4,8 @@ require_relative 'label'
 require_relative 'game'
 require_relative 'author'
 require_relative 'read_data'
-require_relative './modules/add_game'
-require_relative './modules/add_author'
-require_relative './modules/list_games'
-require_relative './modules/list_authors'
+require_relative './modules/game_module'
+require_relative './modules/author_module'
 require_relative './modules/game_handlers'
 
 ACTIONS = {
@@ -27,10 +25,8 @@ ACTIONS = {
 # this is a class
 class App
   include ReadData
-  include AddGame
-  include AddAuthor
-  include ListGames
-  include ListAuthors
+  include GameModule
+  include AuthorModule
   include GameHandlers
 
   def initialize
@@ -113,9 +109,17 @@ class App
     when 1
       book = Book.new(publisher, 'good')
       add_label(book)
+      @books << { 'publisher' => item.publisher, 'cover_state' => item.cover_state,
+        'can_be_archived' => item.move_to_archive }
+      puts ''
+      puts 'Book and label successfully added'
     when 2
       book = Book.new(publisher, 'bad')
       add_label(book)
+      @books << { 'publisher' => item.publisher, 'cover_state' => item.cover_state,
+        'can_be_archived' => item.move_to_archive }
+      puts ''
+      puts 'Book and label successfully added'
     else
       puts 'Incorrect number, please enter the book again'
       add_book
@@ -130,10 +134,6 @@ class App
     label = Label.new(title, color)
     label.add_item(item)
     @labels << { 'title' => label.title, 'color' => label.color }
-    @books << { 'publisher' => item.publisher, 'cover_state' => item.cover_state,
-                'can_be_archived' => item.move_to_archive }
-    puts ''
-    puts 'Book and label successfully added'
   end
 
   def handle_books
