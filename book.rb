@@ -9,12 +9,11 @@ class Book < Item
     @cover_state = cover_state
   end
 
+  private
+
   def can_be_archived?
     return true if super || @cover_state == 'bad'
 
     false
   end
 end
-
-book = Book.new('dsad', 'bad')
-puts book.can_be_archived?
