@@ -89,7 +89,7 @@ class App
         puts "#{i + 1}) Multiplayer: #{b['multiplayer']}, Last played at: #{b['last_played_at']},
         can be archived: #{b['can_be_archived']}"
       end
-      puts "\nEnd of the book's list\n "
+      puts "\nEnd of the game's list\n "
     end
   end
 
@@ -104,6 +104,20 @@ class App
         puts "#{i + 1}) Title: #{b['title']}, color: #{b['color']}"
       end
       puts "\nEnd of the label's list\n "
+    end
+  end
+
+  def list_authors
+    puts ''
+    puts 'author list'
+    puts "These are all saved authors:\ncount(#{@authors.count})\n "
+    if @authors.empty?
+      puts 'No authors in the database'
+    else
+      @authors.each_with_index do |b, i|
+        puts "#{i + 1}) First Name: #{b['first_name']}, Last name: #{b['last_name']}"
+      end
+      puts "\nEnd of the author's list\n "
     end
   end
 
@@ -136,10 +150,10 @@ class App
       game = Game.new(true)
       puts 'When was the last time you played it?:'
       date = input_date(game)
-      add_author(game)
       game.last_played_at = date
+      add_author(game)
     when 2
-      game = Game.new(false, year, month, day)
+      game = Game.new(false)
       puts 'When was the last time you played it?:'
       input_date(game)
       add_author(game)

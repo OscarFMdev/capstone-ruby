@@ -17,6 +17,3 @@ class Author
 
   # attr_accessor :id, :items
 end
-
-author = Author.new('Hello', 'World')
-puts author
