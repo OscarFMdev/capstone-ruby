@@ -109,15 +109,15 @@ class App
     when 1
       book = Book.new(publisher, 'good')
       add_label(book)
-      @books << { 'publisher' => item.publisher, 'cover_state' => item.cover_state,
-                  'can_be_archived' => item.move_to_archive }
+      @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
+                  'can_be_archived' => book.move_to_archive }
       puts ''
       puts 'Book and label successfully added'
     when 2
       book = Book.new(publisher, 'bad')
       add_label(book)
-      @books << { 'publisher' => item.publisher, 'cover_state' => item.cover_state,
-                  'can_be_archived' => item.move_to_archive }
+      @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
+                  'can_be_archived' => book.move_to_archive }
       puts ''
       puts 'Book and label successfully added'
     else
