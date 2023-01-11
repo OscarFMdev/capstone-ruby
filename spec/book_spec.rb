@@ -11,8 +11,8 @@ describe 'Test Book class' do
     expect(book).to be_kind_of(Item)
   end
 
-  it 'books can_be_archived? should be true' do
-    expect(book.can_be_archived?).to eql true
+  it 'books move_to_archive should be true' do
+    expect(book.move_to_archive).to eql true
   end
 
   it "book publisher should be 'test1'" do
