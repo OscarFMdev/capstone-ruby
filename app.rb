@@ -1,9 +1,14 @@
+require 'json'
 require_relative 'book'
 require_relative 'label'
 require_relative 'game'
 require_relative 'author'
-require 'json'
 require_relative 'read_data'
+require_relative './modules/add_game'
+require_relative './modules/add_author'
+require_relative './modules/list_games'
+require_relative './modules/list_authors'
+require_relative './modules/game_handlers'
 
 ACTIONS = {
   1 => :list_books,
@@ -22,6 +27,11 @@ ACTIONS = {
 # this is a class
 class App
   include ReadData
+  include AddGame
+  include AddAuthor
+  include ListGames
+  include ListAuthors
+  include GameHandlers
 
   def initialize
     @books = read_books
@@ -78,21 +88,6 @@ class App
     end
   end
 
-  def list_games
-    puts ''
-    puts 'Game list'
-    puts "These are all saved games:\ncount(#{@games.count})\n "
-    if @games.empty?
-      puts 'No games in the database'
-    else
-      @games.each_with_index do |b, i|
-        puts "#{i + 1}) Multiplayer: #{b['multiplayer']}, Last played at: #{b['last_played_at']},
-        can be archived: #{b['can_be_archived']}"
-      end
-      puts "\nEnd of the game's list\n "
-    end
-  end
-
   def list_labels
     puts ''
     puts 'Label list'
@@ -104,20 +99,6 @@ class App
         puts "#{i + 1}) Title: #{b['title']}, color: #{b['color']}"
       end
       puts "\nEnd of the label's list\n "
-    end
-  end
-
-  def list_authors
-    puts ''
-    puts 'author list'
-    puts "These are all saved authors:\ncount(#{@authors.count})\n "
-    if @authors.empty?
-      puts 'No authors in the database'
-    else
-      @authors.each_with_index do |b, i|
-        puts "#{i + 1}) First Name: #{b['first_name']}, Last name: #{b['last_name']}"
-      end
-      puts "\nEnd of the author's list\n "
     end
   end
 
@@ -141,28 +122,6 @@ class App
     end
   end
 
-  def add_game
-    puts ''
-    puts 'Is the game multiplayer (1) or not (2)? [Input the number]:'
-    multiplayer = gets.chomp.to_i
-    case multiplayer
-    when 1
-      game = Game.new(true)
-      puts 'When was the last time you played it?:'
-      date = input_date(game)
-      game.last_played_at = date
-      add_author(game)
-    when 2
-      game = Game.new(false)
-      puts 'When was the last time you played it?:'
-      input_date(game)
-      add_author(game)
-    else
-      puts 'Incorrect number, please enter the game again'
-      add_game
-    end
-  end
-
   def add_label(item)
     puts 'Label title:'
     title = gets.chomp.to_s
@@ -175,27 +134,6 @@ class App
                 'can_be_archived' => item.move_to_archive }
     puts ''
     puts 'Book and label successfully added'
-  end
-
-  def add_author(item)
-    puts 'Author fist name:'
-    first_name = gets.chomp.to_s
-    puts 'Author last name:'
-    last_name = gets.chomp.to_s
-    author = Author.new(first_name, last_name)
-    author.add_item(item)
-    @authors << { 'first_name' => author.first_name, 'last_name' => author.last_name }
-    @games << { 'multiplayer' => item.multiplayer, 'last_played_at' => item.last_played_at,
-                'can_be_archived' => item.move_to_archive }
-    puts ''
-    puts 'Game and author successfully added'
-  end
-
-  def handle_exit
-    handle_books
-    handle_label
-    handle_games
-    handle_authors
   end
 
   def handle_books
@@ -227,33 +165,11 @@ class App
     puts 'labels saved successfully'
   end
 
-  def handle_games
-    return if @games.empty?
-
-    data = JSON.pretty_generate(@games.map do |e|
-                                  {
-                                    multiplayer: e['multiplayer'],
-                                    last_played_at: e['last_played_at'],
-                                    can_be_archived: e['can_be_archived']
-                                  }
-                                end)
-
-    File.write('./data/games.json', data)
-    puts 'Games saved successfully'
-  end
-
-  def handle_authors
-    return if @authors.empty?
-
-    data = JSON.pretty_generate(@authors.map do |e|
-                                  {
-                                    first_name: e['first_name'],
-                                    last_name: e['last_name']
-                                  }
-                                end)
-
-    File.write('./data/authors.json', data)
-    puts 'Authors saved successfully'
+  def handle_exit
+    handle_books
+    handle_label
+    handle_games
+    handle_authors
   end
 
   def input_date(item)
