@@ -176,6 +176,7 @@ class App
     puts ''
     puts 'Book and label successfully added'
   end
+
   def add_author(item)
     puts 'Author fist name:'
     first_name = gets.chomp.to_s
@@ -225,6 +226,7 @@ class App
     File.write('./data/labels.json', data)
     puts 'labels saved successfully'
   end
+
   def handle_games
     return if @games.empty?
 
@@ -262,6 +264,6 @@ class App
     puts 'Day:'
     day = gets.chomp.to_i
     item.published_date = Date.new(year, month, day)
-    return item.published_date
+    item.published_date
   end
 end

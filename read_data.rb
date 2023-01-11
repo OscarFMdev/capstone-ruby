@@ -28,5 +28,4 @@ module ReadData
     json_from_file = File.read('./data/authors.json')
     JSON.parse(json_from_file)
   end
-
 end

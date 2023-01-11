@@ -3,7 +3,7 @@ require 'date'
 class Item
   attr_accessor :published_date
 
-  def initialize(archive: false, published_date: Date.new(2022,10,10))
+  def initialize(archive: false, published_date: Date.new(2022, 10, 10))
     @id = Random.rand(1..1000)
     @archive = archive
     @published_date = published_date
@@ -16,8 +16,12 @@ class Item
 
   attr_writer :label
 
-  def years_between_dates(date1 = @published_date, date2 =  Date.today)
-    (date2.year - date1.year) + ((date2.month - date1.month) + ((date2.day - date1.day) < 0 ? -1 : 0) < 0 ? -1 : 0)
+  def years_between_dates(date1 = @published_date, date2 = Date.today)
+    date1, date2 = date2, date1 if date1 > date2
+    diff_year = date2.year - date1.year
+    diff_month = date2.month - date1.month
+    diff_day = date2.day - date1.day
+    diff_year - (diff_month.negative? || (diff_month.zero? && diff_day.negative?) ? 1 : 0)
   end
 
   def author=(author)
@@ -38,3 +42,7 @@ class Item
     years_between_dates > 10
   end
 end
+
+item = Item.new
+
+puts item.years_between_dates
