@@ -14,7 +14,7 @@ module GameModule
       @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
                   'can_be_archived' => game.move_to_archive }
       puts ''
-      puts 'Game and author successfully added'
+      puts 'Game successfully added'
     when 2
       game = Game.new(false)
       puts 'When was the last time you played it?:'
@@ -25,7 +25,7 @@ module GameModule
       @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
                   'can_be_archived' => game.move_to_archive }
       puts ''
-      puts 'Game and author successfully added'
+      puts 'Game successfully added'
     else
       puts 'Incorrect number, please enter the game again'
       add_game

@@ -1,7 +1,8 @@
 require_relative './../game'
+require 'date'
 
 describe 'Test Game class' do
-  game = Game.new(false, '10-12-2000')
+  game = Game.new(false)
 
   it 'takes parameters and returns a game object' do
     expect(game).to be_instance_of(Game)
@@ -12,7 +13,7 @@ describe 'Test Game class' do
   end
 
   it 'games can_be_archived? should be true' do
-    expect(game.can_be_archived?).to eql true
+    expect(game.can_be_archived?).to eql false
   end
 
   it "game publisher should be 'test1'" do

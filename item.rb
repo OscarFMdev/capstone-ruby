@@ -14,7 +14,7 @@ class Item
     can_be_archived?
   end
 
-  attr_writer :label
+  attr_writer :label, :author, :genre
 
   def years_between_dates(date1 = @published_date, date2 = Date.today)
     date1, date2 = date2, date1 if date1 > date2
@@ -22,16 +22,6 @@ class Item
     diff_month = date2.month - date1.month
     diff_day = date2.day - date1.day
     diff_year - (diff_month.negative? || (diff_month.zero? && diff_day.negative?) ? 1 : 0)
-  end
-
-  def author=(author)
-    @author = author
-    author.items.push(self) unless author.items.include?(self)
-  end
-
-  def genre=(genre)
-    @genre = genre
-    genre.items.push(self) unless genre.items.include?(self)
   end
 
   private
@@ -42,7 +32,3 @@ class Item
     years_between_dates > 10
   end
 end
-
-item = Item.new
-
-puts item.years_between_dates
