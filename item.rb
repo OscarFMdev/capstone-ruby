@@ -42,7 +42,3 @@ class Item
     years_between_dates > 10
   end
 end
-
-item = Item.new
-
-puts item.years_between_dates
