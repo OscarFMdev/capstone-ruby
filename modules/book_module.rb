@@ -10,27 +10,26 @@ module BookModule
     when 1
       book = Book.new(publisher, 'good')
       puts 'When was it created?:'
-      input_date(book)
-      add_author(book)
-      add_label(book)
-      @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
-                  'can_be_archived' => book.move_to_archive }
-      puts ''
-      puts 'Book successfully added'
+      create_book(book)
     when 2
       book = Book.new(publisher, 'bad')
       puts 'When was it created?:'
-      input_date(book)
-      add_author(book)
-      add_label(book)
-      @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
-                  'can_be_archived' => book.move_to_archive }
-      puts ''
-      puts 'Book successfully added'
+      create_book(book)
     else
       puts 'Incorrect number, please enter the book again'
       add_book
     end
+  end
+
+  def create_book(book)
+    input_date(book)
+    add_author(book)
+    add_label(book)
+    add_genre(book)
+    @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
+                'can_be_archived' => book.move_to_archive }
+    puts ''
+    puts 'Book successfully added'
   end
 
   def list_books

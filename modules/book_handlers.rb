@@ -11,7 +11,7 @@ module BookHandlers
                                 end)
 
     File.write('./data/books.json', data)
-    puts 'books saved successfully'
+    puts 'Books saved successfully'
   end
 
   def handle_label
@@ -25,6 +25,6 @@ module BookHandlers
                                 end)
 
     File.write('./data/labels.json', data)
-    puts 'labels saved successfully'
+    puts 'Labels saved successfully'
   end
 end
