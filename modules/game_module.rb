@@ -7,31 +7,27 @@ module GameModule
     when 1
       game = Game.new(true)
       puts 'When was the last time you played it?:'
-      date = input_date(game)
-      game.last_played_at = date
-      add_author(game)
-      add_label(game)
-      add_genre(game)
-      @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
-                  'can_be_archived' => game.move_to_archive }
-      puts ''
-      puts 'Game successfully added'
+      create_game(game)
     when 2
       game = Game.new(false)
       puts 'When was the last time you played it?:'
-      date = input_date(game)
-      game.last_played_at = date
-      add_author(game)
-      add_author(game)
-      add_label(game)
-      @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
-                  'can_be_archived' => game.move_to_archive }
-      puts ''
-      puts 'Game successfully added'
+      create_game(game)
     else
       puts 'Incorrect number, please enter the game again'
       add_game
     end
+  end
+
+  def create_game(game)
+    date = input_date(game)
+    game.last_played_at = date
+    add_author(game)
+    add_label(game)
+    add_genre(game)
+    @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
+                'can_be_archived' => game.move_to_archive }
+    puts ''
+    puts 'Game successfully added'
   end
 
   def list_games
