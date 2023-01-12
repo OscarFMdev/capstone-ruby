@@ -3,6 +3,8 @@ require_relative 'book'
 require_relative 'label'
 require_relative 'game'
 require_relative 'author'
+require_relative 'genre'
+require_relative 'music_album'
 require_relative 'read_data'
 require_relative './modules/book_module'
 require_relative './modules/label_module'
@@ -10,6 +12,9 @@ require_relative './modules/book_handlers'
 require_relative './modules/game_module'
 require_relative './modules/author_module'
 require_relative './modules/game_handlers'
+require_relative './modules/musicalbum_module'
+require_relative './modules/genre_module'
+require_relative './modules/musicalbum_handlers'
 
 ACTIONS = {
   1 => :list_books,
@@ -33,12 +38,17 @@ class App
   include GameModule
   include AuthorModule
   include GameHandlers
+  include MusicAlbumModule
+  include GenreModule
+  include MusicAlbumHandlers
 
   def initialize
     @books = read_books
     @labels = read_labels
     @games = read_games
     @authors = read_authors
+    @music_albums = read_music_albums
+    @genres = read_genres
   end
 
   def options
@@ -78,6 +88,8 @@ class App
     handle_label
     handle_games
     handle_authors
+    handle_music_albums
+    handle_genres
   end
 
   def input_date(item)

@@ -11,6 +11,7 @@ module GameModule
       game.last_played_at = date
       add_author(game)
       add_label(game)
+      add_genre(game)
       @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,
                   'can_be_archived' => game.move_to_archive }
       puts ''
@@ -20,6 +21,7 @@ module GameModule
       puts 'When was the last time you played it?:'
       date = input_date(game)
       game.last_played_at = date
+      add_author(game)
       add_author(game)
       add_label(game)
       @games << { 'multiplayer' => game.multiplayer, 'last_played_at' => game.last_played_at,

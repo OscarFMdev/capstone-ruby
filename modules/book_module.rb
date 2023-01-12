@@ -13,6 +13,7 @@ module BookModule
       input_date(book)
       add_author(book)
       add_label(book)
+      add_genre(book)
       @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
                   'can_be_archived' => book.move_to_archive }
       puts ''
@@ -23,6 +24,7 @@ module BookModule
       input_date(book)
       add_author(book)
       add_label(book)
+      add_genre(book)
       @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
                   'can_be_archived' => book.move_to_archive }
       puts ''
