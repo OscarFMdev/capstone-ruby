@@ -1,7 +1,12 @@
+require 'json'
 require_relative 'book'
 require_relative 'label'
-require 'json'
+require_relative 'game'
+require_relative 'author'
 require_relative 'read_data'
+require_relative './modules/game_module'
+require_relative './modules/author_module'
+require_relative './modules/game_handlers'
 
 ACTIONS = {
   1 => :list_books,
@@ -20,10 +25,15 @@ ACTIONS = {
 # this is a class
 class App
   include ReadData
+  include GameModule
+  include AuthorModule
+  include GameHandlers
 
   def initialize
     @books = read_books
     @labels = read_labels
+    @games = read_games
+    @authors = read_authors
   end
 
   def options
@@ -94,13 +104,22 @@ class App
     publisher = gets.chomp.to_s
     puts 'Is the cover state good (1) or bad (2)? [Input the number]:'
     state = gets.chomp.to_i
+    puts ''
     case state
     when 1
       book = Book.new(publisher, 'good')
       add_label(book)
+      @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
+                  'can_be_archived' => book.move_to_archive }
+      puts ''
+      puts 'Book and label successfully added'
     when 2
       book = Book.new(publisher, 'bad')
       add_label(book)
+      @books << { 'publisher' => book.publisher, 'cover_state' => book.cover_state,
+                  'can_be_archived' => book.move_to_archive }
+      puts ''
+      puts 'Book and label successfully added'
     else
       puts 'Incorrect number, please enter the book again'
       add_book
@@ -115,15 +134,6 @@ class App
     label = Label.new(title, color)
     label.add_item(item)
     @labels << { 'title' => label.title, 'color' => label.color }
-    @books << { 'publisher' => item.publisher, 'cover_state' => item.cover_state,
-                'can_be_archived' => item.move_to_archive }
-    puts ''
-    puts 'Book and label successfully added'
-  end
-
-  def handle_exit
-    handle_books
-    handle_label
   end
 
   def handle_books
@@ -153,5 +163,23 @@ class App
 
     File.write('./data/labels.json', data)
     puts 'labels saved successfully'
+  end
+
+  def handle_exit
+    handle_books
+    handle_label
+    handle_games
+    handle_authors
+  end
+
+  def input_date(item)
+    puts 'Year:'
+    year = gets.chomp.to_i
+    puts 'Month:'
+    month = gets.chomp.to_i
+    puts 'Day:'
+    day = gets.chomp.to_i
+    item.published_date = Date.new(year, month, day)
+    item.published_date
   end
 end
