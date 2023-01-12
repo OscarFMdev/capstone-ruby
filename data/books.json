@@ -1,0 +1,22 @@
+[
+  {
+    "publisher": "LALA",
+    "cover_state": "bad",
+    "can_be_archived": true
+  },
+  {
+    "publisher": "Nata",
+    "cover_state": "bad",
+    "can_be_archived": true
+  },
+  {
+    "publisher": "Jals",
+    "cover_state": "bad",
+    "can_be_archived": true
+  },
+  {
+    "publisher": "JOL",
+    "cover_state": "good",
+    "can_be_archived": false
+  }
+]
